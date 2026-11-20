@@ -1,0 +1,203 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# Submission "Kasteleyn": Challenge KasteleynChallenge.lean, Solution KasteleynSolution.lean,
+# comparator configuration comparator.json (paths relative to the repository root).
+version: "v0.4"
+
+project:
+  name: "Kasteleyn orientations and the Pfaffian method for plane graphs, with a linear-time orientation, in Lean 4"
+  description: >-
+    A Lean 4 and Mathlib formalization of Kasteleyn's method for counting
+    perfect matchings of plane graphs. Graphs are Mathlib simple graphs on a
+    finite vertex type (no loops, no multiple edges); a rotation system is a
+    permutation of the darts that cycles the darts leaving each vertex, its
+    faces are the cycles of the face permutation, and it is plane if the
+    graph is connected and Euler's formula V + F = E + 2 holds. A Kasteleyn
+    orientation with respect to a face f0 is an orientation of the edges in
+    which every face other than f0 has an odd number of clockwise darts.
+    Since faces are cycles of darts, a graph without edges has no faces in
+    this representation; a connected graph without edges is a single vertex,
+    which is not plane in this sense and is treated by a separate theorem.
+    Five theorems are compared: (1) every rotation system of a connected
+    graph with at least one edge has a Kasteleyn orientation with respect to
+    any face f0; (2) for a
+    plane rotation system, a Kasteleyn orientation and edge weights in any
+    commutative ring, the Pfaffian of the signed weighted adjacency matrix
+    (defined by expansion along the first row for a linear order on the
+    vertices) equals, up to a sign +1 or -1, the sum over the perfect
+    matchings of the products of their edge weights; (3) with unit weights
+    the Pfaffian is plus or minus the number of perfect matchings and the
+    determinant of the signed adjacency matrix is its square; (4) one fixed
+    program for an explicit word RAM (unit cost per instruction, natural
+    registers and memory cells bounded by a word bound W along the run)
+    computes a Kasteleyn orientation of every rotation system of a connected
+    graph with at least one edge, with F faces and S darts, given by a
+    standard encoding of 4 + F + 3S words, within 36F + 39S + 27 steps with
+    every natural word at most 4F + 5S + 8; (5) a connected graph without
+    edges has one vertex, no darts and no perfect matching, and the Pfaffian
+    and determinant identities of (2) and (3) hold for it, both sides being
+    0. The proofs use only the axioms propext,
+    Classical.choice and Quot.sound.
+  authors:
+    - "Robert D. Barish"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Robert D. Barish"
+
+classification:
+  arxiv: [math.CO, cs.DS]
+  msc2020: [05C70, 05C10, 05C85, 15A15, 68Q25]
+
+sources:
+  - title: "Dimer statistics and phase transitions"
+    authors:
+      - "P. W. Kasteleyn"
+    type: paper
+    location: "Journal of Mathematical Physics 4 (1963), 287-293"
+    relationship: formalizes
+    note: >-
+      Kasteleyn's theorem for planar graphs: an orientation in which every
+      bounded face has an odd number of clockwise edges exists, and for it
+      the Pfaffian of the signed adjacency matrix counts the perfect
+      matchings (dimer coverings). Formalized as Kasteleyn.orientation_exists,
+      Kasteleyn.pfaffian_formula (weighted form) and Kasteleyn.matching_count,
+      for plane graphs given as rotation systems.
+  - title: "Graph theory and crystal physics"
+    authors:
+      - "P. W. Kasteleyn"
+    type: book
+    location: "in F. Harary (ed.), Graph Theory and Theoretical Physics, Academic Press, London (1967), 43-110"
+    relationship: formalizes
+    note: >-
+      The survey with the proof of existence of Kasteleyn orientations by a
+      spanning tree of the dual graph, and the Pfaffian method. The program
+      of Kasteleyn.linear_time_orientation implements this construction
+      (breadth-first search of the dual graph from the outer face, then
+      fixing the parity of each other face in reverse search order); the
+      step bound is proved for this program.
+  - title: "Matching Theory"
+    authors:
+      - "L. Lovász"
+      - "M. D. Plummer"
+    type: book
+    location: "Annals of Discrete Mathematics 29, North-Holland, Amsterdam (1986), Chapter 8"
+    relationship: adapts
+    note: >-
+      Section 8.2 (Pfaffians and perfect matchings: the expansion of the
+      Pfaffian over perfect matchings, pf(A)^2 = det(A)) and Section 8.3
+      (Pfaffian orientations of planar graphs, Kasteleyn's cycle lemma). The
+      formal proof follows this presentation, with the separation property of
+      cycles derived from Euler's formula on rotation systems.
+  - title: "The statistics of dimers on a lattice: I. The number of dimer arrangements on a quadratic lattice"
+    authors:
+      - "P. W. Kasteleyn"
+    type: paper
+    location: "Physica 27 (1961), 1209-1225"
+    relationship: background
+    note: "The Pfaffian method for the square lattice; the general planar case is the 1963 article."
+  - title: "Graphs on Surfaces"
+    authors:
+      - "B. Mohar"
+      - "C. Thomassen"
+    type: book
+    location: "Johns Hopkins University Press, Baltimore (2001), Sections 3.2 and 4.1"
+    relationship: background
+    note: >-
+      Rotation systems as combinatorial embeddings, and Euler's formula
+      characterizing the sphere. This correspondence between rotation systems
+      and embeddings is not formalized; plane graphs are defined as rotation
+      systems of connected graphs satisfying Euler's formula.
+
+related_formalizations: []
+
+status:
+  scope: >-
+    Proved: Kasteleyn.orientation_exists, Kasteleyn.pfaffian_formula,
+    Kasteleyn.matching_count, Kasteleyn.linear_time_orientation and
+    Kasteleyn.edgeless_case, the five theorems stated in KasteleynChallenge.lean and proved in
+    KasteleynSolution.lean (from Kasteleyn/Main.lean), compared by
+    lake comparator with comparator.json. The library Kasteleyn of this repository also proves pf(A)^2 = det(A) for alternating matrices
+    (Kasteleyn.pf_sq, Kasteleyn/Pfaffian/Det.lean), the expansion of the
+    Pfaffian over perfect matchings (Kasteleyn/Pfaffian/Lemmas.lean) and an
+    explicit Kasteleyn orientation (Kasteleyn/Plane/Orientation.lean). Not
+    formalized: the correspondence between rotation systems and topological
+    embeddings in the plane.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+
+automation:
+  methods:
+    - method: agent
+      models: ["claude-opus-5-5"]
+      framework: "claude.ai"
+      tool_setup: >-
+        Claude Opus 5.5 (Anthropic) was used, as agents under the direction of the author, for the
+        Lean formalization and the documentation. The author set the task, the target statements and
+        the requirements. Tools: Lean v4.35.0-rc2 and Lake, Mathlib, the toolchain's lake comparator
+        and independent kernels.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "cloud container"
+      prompting_notes: "n/a"
+  spend_usd: "not tracked"
+
+fidelity:
+  divergences: >-
+    (1) Plane graphs are rotation systems of connected simple graphs
+    satisfying Euler's formula V - E + F = 2, not drawings; that these are
+    exactly the plane embeddings is classical and not formalized. Kasteleyn's
+    method applies to a disconnected plane graph component by component;
+    that case is not formalized. The outer face is an arbitrary face f0, and "clockwise" refers to the traversal of
+    each face by the face permutation. (2) Multiple edges and loops are
+    excluded (Mathlib simple graphs). (3) A perfect matching is a
+    fixed-point-free involution of the vertices along edges, each matched
+    pair counted once. (4) The Pfaffian is defined by expansion along the
+    first row with respect to a linear order on the vertices; the statements
+    hold for every linear order. (5) The running-time statement is about one
+    explicit machine (unit cost per instruction, natural words bounded by
+    4F + 5S + 8 along the run) and one input encoding, which lists the darts
+    face by face with the faces and darts numbered by arbitrary bijections;
+    the output has one word per dart slot, 1 meaning that the dart is
+    oriented forward. The orientation statements (1) and (4) assume that the
+    graph is connected and has at least one edge, not that the rotation
+    system is plane. (6) Faces are the cycles of the face permutation on the
+    darts, so the connected graph without edges (a single vertex) has no
+    face here, although as a drawing it has one; it is excluded from (1) to
+    (4) explicitly ((1), (4)) or through Euler's formula ((2), (3)), and (5)
+    states that Kasteleyn's identities hold for it trivially.
+
+review:
+  status: "unreviewed"
+  reviewers: []
+  notes: >-
+    No claims beyond the verification report for the submitted commit. The
+    proofs have not been reviewed by a person.
+
+alignment:
+  namespace: "Kasteleyn"
+  statements:
+    - source: "Kasteleyn 1963, 1967: existence of an orientation with an odd number of clockwise edges on every bounded face"
+      lean: "Kasteleyn.orientation_exists"
+      module: "KasteleynSolution"
+      status: proved
+    - source: "Kasteleyn 1963; Lovász-Plummer 1986, Section 8.3: Pfaffian of the signed (weighted) adjacency matrix"
+      lean: "Kasteleyn.pfaffian_formula"
+      module: "KasteleynSolution"
+      status: proved
+    - source: "Kasteleyn 1963: the number of perfect matchings of a planar graph is |Pf A| = sqrt(det A)"
+      lean: "Kasteleyn.matching_count"
+      module: "KasteleynSolution"
+      status: proved
+    - source: "Kasteleyn 1967: the construction of a Kasteleyn orientation through a spanning tree of the dual graph, in linear time"
+      lean: "Kasteleyn.linear_time_orientation"
+      module: "KasteleynSolution"
+      status: proved
+    - source: "The graph without edges (a single vertex), for which the Pfaffian and the number of perfect matchings are both 0"
+      lean: "Kasteleyn.edgeless_case"
+      module: "KasteleynSolution"
+      status: proved
+
+acknowledgements: >-
+  Mathlib and the Lean community; the Lean toolchain's lake comparator and
+  independent kernels.

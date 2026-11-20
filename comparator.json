@@ -1,0 +1,18 @@
+{
+  "challenge_module": "KasteleynChallenge",
+  "solution_module": "KasteleynSolution",
+  "theorem_names": [
+    "Kasteleyn.orientation_exists",
+    "Kasteleyn.pfaffian_formula",
+    "Kasteleyn.matching_count",
+    "Kasteleyn.linear_time_orientation",
+    "Kasteleyn.edgeless_case"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
