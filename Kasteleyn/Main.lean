@@ -3,6 +3,7 @@ module
 public import Kasteleyn.Spec
 public import Kasteleyn.Plane.Matching
 public import Kasteleyn.Machine.OrientBridge
+public import WordRAM.Machine.IsWord
 
 /-!
 # The five targets of `Kasteleyn/Spec.lean`
@@ -52,7 +53,8 @@ theorem matching_count : MatchingCount.{u} := by
 
 /-- **A Kasteleyn orientation in linear time.** -/
 theorem linear_time_orientation : LinearTimeOrientation.{u} := by
-  refine ⟨compile Orient.orient 0 ++ [Instr.halt], ?_⟩
+  refine ⟨compile Orient.orient 0 ++ [Instr.halt],
+    Stmt.isWord_compile_halt (by kernel_rfl), ?_⟩
   intro V _ _ G _ M eF eD hG _ f₀
   obtain ⟨hlen, o, hK, hR⟩ := Orient.orient_rotationSystem (M := M) (eF := eF) (eD := eD) hG f₀
   refine ⟨hlen, _, hR, by simp, ?_⟩

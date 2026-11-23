@@ -10,33 +10,33 @@ project:
     perfect matchings of plane graphs. Graphs are Mathlib simple graphs on a
     finite vertex type (no loops, no multiple edges); a rotation system is a
     permutation of the darts that cycles the darts leaving each vertex, its
-    faces are the cycles of the face permutation, and it is plane if the
-    graph is connected and Euler's formula V + F = E + 2 holds. A Kasteleyn
-    orientation with respect to a face f0 is an orientation of the edges in
-    which every face other than f0 has an odd number of clockwise darts.
-    Since faces are cycles of darts, a graph without edges has no faces in
-    this representation; a connected graph without edges is a single vertex,
-    which is not plane in this sense and is treated by a separate theorem.
-    Five theorems are compared: (1) every rotation system of a connected
-    graph with at least one edge has a Kasteleyn orientation with respect to
-    any face f0; (2) for a
-    plane rotation system, a Kasteleyn orientation and edge weights in any
-    commutative ring, the Pfaffian of the signed weighted adjacency matrix
-    (defined by expansion along the first row for a linear order on the
-    vertices) equals, up to a sign +1 or -1, the sum over the perfect
-    matchings of the products of their edge weights; (3) with unit weights
-    the Pfaffian is plus or minus the number of perfect matchings and the
-    determinant of the signed adjacency matrix is its square; (4) one fixed
-    program for an explicit word RAM (unit cost per instruction, natural
-    registers and memory cells bounded by a word bound W along the run)
-    computes a Kasteleyn orientation of every rotation system of a connected
-    graph with at least one edge, with F faces and S darts, given by a
-    standard encoding of 4 + F + 3S words, within 36F + 39S + 27 steps with
-    every natural word at most 4F + 5S + 8; (5) a connected graph without
-    edges has one vertex, no darts and no perfect matching, and the Pfaffian
-    and determinant identities of (2) and (3) hold for it, both sides being
-    0. The proofs use only the axioms propext,
-    Classical.choice and Quot.sound.
+    faces are the cycles of the face permutation, and it is plane if the graph
+    is connected and Euler's formula |V| + |F| = |E| + 2 holds, F the set of
+    faces. A Kasteleyn orientation with respect to a face f0 is an orientation
+    of the edges in which every face other than f0 has an odd number of
+    clockwise darts. Since faces are cycles of darts, a graph without edges has
+    no faces in this representation; a connected graph without edges is a single
+    vertex, which is not plane in this sense and is treated by a separate
+    theorem. Five theorems are compared: (1) every rotation system of a
+    connected graph with at least one edge has a Kasteleyn orientation with
+    respect to any face f0; (2) for a plane rotation system, a Kasteleyn
+    orientation and edge weights in any commutative ring, the Pfaffian of the
+    signed weighted adjacency matrix (defined by expansion along the first row
+    for a linear order on the vertices) equals, up to a sign +1 or -1, the sum
+    over the perfect matchings of the products of their edge weights; (3) with
+    unit weights the Pfaffian is plus or minus the number of perfect matchings
+    and the determinant of the signed adjacency matrix is its square; (4) one
+    fixed word program for an explicit word RAM (unit cost per instruction,
+    natural registers and memory cells bounded by a word bound W along the run;
+    the machine also has exact real registers, and a word program contains no
+    instruction that uses them) computes a Kasteleyn orientation of every
+    rotation system of a connected graph with at least one edge, with F faces
+    and S darts, given by a standard encoding of 4 + F + 3S words, within 36F +
+    39S + 27 steps with every natural word at most 4F + 5S + 8; (5) a connected
+    graph without edges has one vertex, no darts and no perfect matching, and
+    the Pfaffian and determinant identities of (2) and (3) hold for it, both
+    sides being 0. The proofs use only the axioms propext, Classical.choice and
+    Quot.sound.
   authors:
     - "Robert D. Barish"
   license: "Apache-2.0"
@@ -144,28 +144,29 @@ automation:
 
 fidelity:
   divergences: >-
-    (1) Plane graphs are rotation systems of connected simple graphs
-    satisfying Euler's formula V - E + F = 2, not drawings; that these are
-    exactly the plane embeddings is classical and not formalized. Kasteleyn's
-    method applies to a disconnected plane graph component by component;
-    that case is not formalized. The outer face is an arbitrary face f0, and "clockwise" refers to the traversal of
-    each face by the face permutation. (2) Multiple edges and loops are
-    excluded (Mathlib simple graphs). (3) A perfect matching is a
-    fixed-point-free involution of the vertices along edges, each matched
-    pair counted once. (4) The Pfaffian is defined by expansion along the
-    first row with respect to a linear order on the vertices; the statements
-    hold for every linear order. (5) The running-time statement is about one
-    explicit machine (unit cost per instruction, natural words bounded by
-    4F + 5S + 8 along the run) and one input encoding, which lists the darts
-    face by face with the faces and darts numbered by arbitrary bijections;
-    the output has one word per dart slot, 1 meaning that the dart is
-    oriented forward. The orientation statements (1) and (4) assume that the
-    graph is connected and has at least one edge, not that the rotation
-    system is plane. (6) Faces are the cycles of the face permutation on the
-    darts, so the connected graph without edges (a single vertex) has no
-    face here, although as a drawing it has one; it is excluded from (1) to
-    (4) explicitly ((1), (4)) or through Euler's formula ((2), (3)), and (5)
-    states that Kasteleyn's identities hold for it trivially.
+    (1) Plane graphs are rotation systems of connected simple graphs satisfying
+    Euler's formula |V| + |F| = |E| + 2, not drawings; that these are exactly
+    the plane embeddings is classical and not formalized. Kasteleyn's method
+    applies to a disconnected plane graph component by component; that case is
+    not formalized. The outer face is an arbitrary face f0, and "clockwise"
+    refers to the traversal of each face by the face permutation. (2) Multiple
+    edges and loops are excluded (Mathlib simple graphs). (3) A perfect matching
+    is a fixed-point-free involution of the vertices along edges, each matched
+    pair counted once. (4) The Pfaffian is defined by expansion along the first
+    row with respect to a linear order on the vertices; the statements hold for
+    every linear order. (5) The running-time statement is about one explicit
+    machine (unit cost per instruction, natural words bounded by 4F + 5S + 8
+    along the run), a word program (WordRAM.Program.IsWord: no real instruction,
+    checked by the kernel on the compiled code), and one input encoding, which
+    lists the darts face by face with the faces and darts numbered by arbitrary
+    bijections; the output has one word per dart slot, 1 meaning that the dart
+    is oriented forward. The orientation statements (1) and (4) assume that the
+    graph is connected and has at least one edge, not that the rotation system
+    is plane. (6) Faces are the cycles of the face permutation on the darts, so
+    the connected graph without edges (a single vertex) has no face here,
+    although as a drawing it has one; it is excluded from (1) to (4) explicitly
+    ((1), (4)) or through Euler's formula ((2), (3)), and (5) states that
+    Kasteleyn's identities hold for it trivially.
 
 review:
   status: "unreviewed"

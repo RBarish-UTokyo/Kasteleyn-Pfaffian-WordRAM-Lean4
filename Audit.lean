@@ -8,7 +8,7 @@ import Kasteleyn
 # Axiom audit
 
 Prints the axioms of the 5 compared theorems (stated in `KasteleynChallenge.lean`, proved by
-`KasteleynSolution.lean`) and of 32 further theorems of the libraries. Every report must name only
+`KasteleynSolution.lean`) and of 35 further theorems of the libraries. Every report must name only
 `propext`, `Classical.choice` and `Quot.sound`. Run it with
 
     lake build && lake env lean Audit.lean
@@ -39,6 +39,9 @@ Prints the axioms of the 5 compared theorems (stated in `KasteleynChallenge.lean
 #print axioms WordRAM.Machine.Stmt.exec_realsToNat
 #print axioms WordRAM.Machine.Stmt.runsWithin_realsToNat
 #print axioms WordRAM.Machine.Stmt.compile_realsToNat_noReal
+#print axioms WordRAM.Program.isWord_of_all
+#print axioms WordRAM.Machine.Stmt.compile_wordOnly
+#print axioms WordRAM.Machine.Stmt.isWord_compile_halt
 #print axioms WordRAM.Machine.Exec.det
 #print axioms WordRAM.Machine.Exec.toExecI_linLoopFree
 #print axioms WordRAM.Machine.Exec.toExecI_whileLtR
